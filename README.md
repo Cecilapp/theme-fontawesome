@@ -34,7 +34,7 @@ Include styles and webfonts from the `<head>` of your template:
 Display the desired icon:
 
 ```twig
-{{ fontawesome.icon('<name>', '<font>') ~}}
+{{ fontawesome.icon('<name>', '<font>') }}
 ```
 
 - `<name>`: name of the [font](https://fontawesome.com/search?o=r&m=free&s=solid%2Cregular&f=brands%2Cclassic), e.g. "star"
