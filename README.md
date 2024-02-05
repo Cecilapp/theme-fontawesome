@@ -25,7 +25,7 @@ Import macro in your template:
 {% import 'macros/fontawesome.twig' as fontawesome %}
 ```
 
-Include styles and webfonts from the `<head>` of your template:
+Then include styles and webfonts in the `<head>` of your template:
 
 ```twig
 {% include 'partials/fontawesome.twig' %}
@@ -34,8 +34,20 @@ Include styles and webfonts from the `<head>` of your template:
 Display the desired icon:
 
 ```twig
-{{ fontawesome.icon('<name>', '<font>') }}
+{{ fontawesome.icon('<name>', '<style>', '<size>', '<attributes>') }}
 ```
 
-- `<name>`: name of the [font](https://fontawesome.com/search?o=r&m=free&s=solid%2Cregular&f=brands%2Cclassic), e.g. "star"
-- `<font>`: font style, e.g. "regular" ("regular", "solid" or "brands". "regular" by default)
+- `<name>`: name of the [icon](https://fontawesome.com/search?o=r&m=free&s=solid%2Cregular&f=brands%2Cclassic)
+- `<style>`: style ("regular", "solid" or "brands", "regular" by default)
+- `<size>`: font [size](https://fontawesome.com/docs/web/style/size) (optional)
+- `<attributes>`: additional HTML attributes (optional)
+
+## Example
+
+```twig
+{{ fontawesome.icon('github', 'brands', 'xl', {style: 'color: #333'}) ~}}
+```
+
+```html
+<i class="fa-github fa-brands fa-xl" style="color: #333">
+```
