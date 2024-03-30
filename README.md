@@ -28,7 +28,7 @@ Import macro in your template:
 Then include styles and webfonts in the `<head>` of your template:
 
 ```twig
-{% include 'partials/fontawesome.twig' %}
+{{ include('partials/fontawesome.twig') }}
 ```
 
 Display the desired icon:
