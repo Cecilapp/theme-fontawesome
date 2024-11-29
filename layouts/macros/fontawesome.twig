@@ -1,7 +1,7 @@
-{% macro icon(name, style = 'regular', size = '', attributes = []) -%}
+{% macro icon(name, style = 'regular', size = '', rotate = '', flip = '', attributes = []) -%}
 {% set html_attributes = '' %}
 {% for name, value in attributes %}
 {% set html_attributes = html_attributes ~ ' ' ~ name ~ '="' ~ value ~ '"' %}
 {% endfor %}
-<i class="fa-{{ style }} fa-{{ name }}{% if size %}{{ ' fa-' ~ size }}{% endif %}"{{ html_attributes }}></i>
+<i class="fa-{{ style }} fa-{{ name }}{% if size %}{{ ' fa-' ~ size }}{% endif %}{% if rotate %}{{ ' fa-rotate-' ~ rotate }}{% endif %}{% if flip %}{{ ' fa-flip-' ~ flip }}{% endif %}"{{ html_attributes }}></i>
 {%- endmacro %}

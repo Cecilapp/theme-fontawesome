@@ -34,18 +34,20 @@ Then include styles and webfonts in the `<head>` of your template:
 Display the desired icon:
 
 ```twig
-{{ fontawesome.icon('<name>', '<style>', '<size>', '<attributes>') }}
+{{ fontawesome.icon('<name>', '<style>', '<size>', '<rotate>', '<flip>', '<attributes>') }}
 ```
 
 - `<name>`: name of the [icon](https://fontawesome.com/search?o=r&m=free&s=solid%2Cregular&f=brands%2Cclassic)
-- `<style>`: style ("regular", "solid" or "brands", "regular" by default)
+- `<style>`: style ("regular", "solid" or "brands". "regular" by default)
 - `<size>`: font [size](https://fontawesome.com/docs/web/style/size) (optional)
+- `<rotate>`: rotation in degrees ("90", "180", "270" or custom)
+- `<flip>`: flipping ("horizontal", "vertical" or "both")
 - `<attributes>`: additional HTML attributes (optional)
 
 ## Example
 
 ```twig
-{{ fontawesome.icon('github', 'brands', 'xl', {style: 'color: #333'}) ~}}
+{{ fontawesome.icon(name:'github', style:'brands', size:'xl', attributes:{style: 'color: #333'}) ~}}
 ```
 
 ```html
