@@ -1,5 +1,5 @@
     {#- https://fontawesome.com/download ~#}
-    {{ asset('css/fontawesome/fontawesome.css')|html({}, {preload: true}) }}
-    {{ asset('css/fontawesome/regular.css')|html({}, {preload: true}) }}
-    {{ asset('css/fontawesome/solid.css')|html({}, {preload: true}) }}
-    {{ asset('css/fontawesome/brands.css')|html({}, {preload: true}) }}
+    {{ html(asset('css/fontawesome/fontawesome.css'), options={preload: true}) }}
+    {{ html(asset('css/fontawesome/regular.css'), options={preload: true}) }}
+    {{ html(asset('css/fontawesome/solid.css'), options={preload: true}) }}
+    {{ html(asset('css/fontawesome/brands.css'), options={preload: true}) }}
