@@ -1,8 +1,19 @@
-    {#- https://fontawesome.com ~#}
-    {{ html(asset('css/webfonts/fa-regular-400.woff2', options={fingerprint: false}), options={preload: true}) }}
-    {{ html(asset('css/webfonts/fa-solid-900.woff2', options={fingerprint: false}), options={preload: true}) }}
-    {{ html(asset('css/webfonts/fa-brands-400.woff2', options={fingerprint: false}), options={preload: true}) }}
-    {{ html(asset('css/fontawesome/fontawesome.css'), attributes={defer: ''}, options={preload: true}) }}
-    {{ html(asset('css/fontawesome/regular.css'), attributes={defer: ''}, options={preload: true}) }}
-    {{ html(asset('css/fontawesome/solid.css'), attributes={defer: ''}, options={preload: true}) }}
-    {{ html(asset('css/fontawesome/brands.css'), attributes={defer: ''}, options={preload: true}) }}
+  {#- https://fontawesome.com -#}
+  {%- if styles|default([]) is empty -%}
+    {%- set styles = ['regular', 'solid', 'brands'] -%}
+  {%- endif -%}
+  {{- html(asset('css/fontawesome/fontawesome.css'), attributes={defer: ''}, options={preload: true}) ~}}
+  {%- for style in styles -%}
+    {%- if style == 'regular' -%}
+  {{- html(asset('css/webfonts/fa-regular-400.woff2', options={fingerprint: false}), options={preload: true}) ~}}
+  {{- html(asset('css/fontawesome/regular.css'), attributes={defer: ''}, options={preload: true}) ~}}
+    {%- endif -%}
+    {%- if style == 'solid' -%}
+  {{- html(asset('css/webfonts/fa-solid-900.woff2', options={fingerprint: false}), options={preload: true}) ~}}
+  {{- html(asset('css/fontawesome/solid.css'), attributes={defer: ''}, options={preload: true}) ~}}
+    {%- endif -%}
+    {%- if style == 'brands' -%}
+  {{- html(asset('css/webfonts/fa-brands-400.woff2', options={fingerprint: false}), options={preload: true}) ~}}
+  {{- html(asset('css/fontawesome/brands.css'), attributes={defer: ''}, options={preload: true}) ~}}
+    {%- endif -%}
+  {%- endfor %}

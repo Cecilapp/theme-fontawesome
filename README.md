@@ -19,16 +19,19 @@ theme:
   - fontawesome
 ```
 
-Import macro in your template:
-
-```twig
-{% import 'macros/fontawesome.twig' as fontawesome %}
-```
-
-Then include styles and webfonts in the `<head>` of your template:
+Include styles and webfonts in the `<head>` of your template:
 
 ```twig
 {{ include('partials/fontawesome.twig') }}
+```
+
+> By default, it includes _regular_, _solid_, and _brands_ icons, but you can select only the one(s) you want using the `styles` array, i.e.:
+> `{{ include('partials/fontawesome.twig', {styles: ['brands']}) }}`
+
+Then import macro in your template:
+
+```twig
+{% import 'macros/fontawesome.twig' as fontawesome %}
 ```
 
 Display the desired icon:
