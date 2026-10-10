@@ -1,7 +1,17 @@
-{% macro icon(name, style = 'regular', size = '', rotate = '', flip = '', attributes = []) -%}
-{% set html_attributes = '' %}
-{% for name, value in attributes %}
-{% set html_attributes = html_attributes ~ ' ' ~ name ~ '="' ~ value ~ '"' %}
-{% endfor %}
-<i class="fa-{{ style }} fa-{{ name }}{% if size %}{{ ' fa-' ~ size }}{% endif %}{% if rotate %}{{ ' fa-rotate-' ~ rotate }}{% endif %}{% if flip %}{{ ' fa-flip-' ~ flip }}{% endif %}"{{ html_attributes }}></i>
+{% macro icon(name, style = 'regular', size = '', rotate = '', flip = '', attributes = {}) -%}
+{%- set class = 'fa-' ~ style ~ ' fa-' ~ name -%}
+{%- if size %}{% set class = class ~ ' fa-' ~ size %}{% endif -%}
+{%- if rotate -%}
+  {%- if rotate in ['90', '180', '270', 90, 180, 270] -%}
+    {%- set class = class ~ ' fa-rotate-' ~ rotate -%}
+  {%- else -%}
+    {#- custom angle: https://fontawesome.com/docs/web/style/rotate#rotate-by-a-custom-value -#}
+    {%- set class = class ~ ' fa-rotate-by' -%}
+    {%- set attributes = attributes|merge({style: '--fa-rotate-angle: ' ~ (rotate matches '/^-?[0-9.]+$/' ? rotate ~ 'deg' : rotate) ~ ';' ~ (attributes.style is defined ? ' ' ~ attributes.style : '')}) -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if flip %}{% set class = class ~ ' fa-flip-' ~ flip %}{% endif -%}
+{%- if attributes.class is defined %}{% set class = class ~ ' ' ~ attributes.class %}{% endif -%}
+{%- set attributes = {'aria-hidden': 'true'}|merge(attributes) -%}
+<i class="{{ class|e }}"{% for attr, value in attributes|filter((v, k) => k != 'class') %} {{ attr|e }}="{{ value|e }}"{% endfor %}></i>
 {%- endmacro %}
