@@ -1,0 +1,258 @@
+{#- Base layout of the demo: Pico CSS (bundled with Cecil), with Font Awesome examples and gallery -#}
+{%- import 'macros/fontawesome.twig' as fontawesome -%}
+<!DOCTYPE html>
+<html lang="{{ site.language }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{- include('partials/metatags.html.twig', {page: page, site: site}, with_context=false) ~}}
+    {{- include('partials/fontawesome.twig') ~}}
+    <style>{% apply minify_css ~%}
+      {{- include('partials/pico.css.twig') ~}}
+      body > header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--pico-spacing);
+      }
+      body > header hgroup {
+        margin: 0;
+      }
+      body > header nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+      }
+      .site-title {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--pico-h1-color);
+        text-decoration: none;
+      }
+      .examples {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+        gap: var(--pico-spacing);
+      }
+      .examples article {
+        margin: 0;
+      }
+      .examples ul {
+        margin: 0;
+        padding: 0;
+      }
+      .examples li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        list-style: none;
+      }
+      .examples li > span {
+        flex: 0 0 3.5rem;
+        text-align: center;
+        color: var(--pico-primary);
+      }
+      .examples code {
+        font-size: .75rem;
+        word-break: break-word;
+      }
+      .gallery-tools {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--pico-spacing);
+      }
+      .gallery-tools input[type="search"] {
+        flex: 1 1 16rem;
+        margin: 0;
+      }
+      .gallery-tools [role="group"] {
+        width: auto;
+        margin: 0;
+      }
+      .gallery-tools output {
+        color: var(--pico-muted-color);
+      }
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+        gap: .5rem;
+        margin: var(--pico-spacing) 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .gallery li {
+        margin: 0;
+        list-style: none;
+      }
+      .gallery:not([data-style="solid"]) li[data-style="solid"],
+      .gallery:not([data-style="brands"]) li[data-style="brands"] {
+        display: none;
+      }
+      .gallery button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: .75rem;
+        width: 100%;
+        height: 100%;
+        padding: 1.25rem .5rem .75rem;
+        border-color: var(--pico-muted-border-color);
+        background: transparent;
+        color: var(--pico-color);
+        font-size: .75rem;
+        word-break: break-word;
+      }
+      .gallery button i {
+        font-size: 1.5rem;
+      }
+      .gallery button:hover,
+      .gallery button:focus-visible {
+        border-color: var(--pico-primary-border);
+        color: var(--pico-primary);
+      }
+      .gallery button.copied {
+        border-color: var(--pico-ins-color);
+        color: var(--pico-ins-color);
+      }
+    {% endapply %}</style>
+  </head>
+  <body>
+    <header class="container">
+      <hgroup>
+        <a class="site-title" href="{{ url(site.home) }}">{{ fontawesome.icon('font-awesome', 'brands') }} {{ site.title }}</a>
+        <p>{{ site.baseline }}</p>
+      </hgroup>
+      <nav>
+        <ul>
+        {%- for entry in site.menus.main|default([])|sort_by_weight %}
+          <li><a href="{{ url(entry.url) }}">{{ fontawesome.icon('github', 'brands') }} {{ entry.name }}</a></li>
+        {%- endfor %}
+        </ul>
+      </nav>
+    </header>
+    <main class="container">
+      {%- block content ~%}
+      {{- page.content ~}}
+      {%- endblock content ~%}
+      {%- if page.gallery|default(false) %}
+      {#- each example is rendered by the macro, next to its call -#}
+      {%- set examples = [
+        {title: 'Styles', items: [
+          {code: "fontawesome.icon('face-smile')", html: fontawesome.icon('face-smile')},
+          {code: "fontawesome.icon('face-smile', 'solid')", html: fontawesome.icon('face-smile', 'solid')},
+          {code: "fontawesome.icon('github', 'brands')", html: fontawesome.icon('github', 'brands')},
+        ]},
+        {title: 'Sizes', items: [
+          {code: "fontawesome.icon('star', 'solid', 'xs')", html: fontawesome.icon('star', 'solid', 'xs')},
+          {code: "fontawesome.icon('star', 'solid', 'lg')", html: fontawesome.icon('star', 'solid', 'lg')},
+          {code: "fontawesome.icon('star', 'solid', '2xl')", html: fontawesome.icon('star', 'solid', '2xl')},
+        ]},
+        {title: 'Rotation', items: [
+          {code: "fontawesome.icon('plane', 'solid', 'xl', '90')", html: fontawesome.icon('plane', 'solid', 'xl', '90')},
+          {code: "fontawesome.icon('plane', 'solid', 'xl', '180')", html: fontawesome.icon('plane', 'solid', 'xl', '180')},
+          {code: "fontawesome.icon('plane', 'solid', 'xl', '-45')", html: fontawesome.icon('plane', 'solid', 'xl', '-45')},
+        ]},
+        {title: 'Flip', items: [
+          {code: "fontawesome.icon('hand-point-right', size: 'xl', flip: 'horizontal')", html: fontawesome.icon('hand-point-right', size: 'xl', flip: 'horizontal')},
+          {code: "fontawesome.icon('hand-point-right', size: 'xl', flip: 'vertical')", html: fontawesome.icon('hand-point-right', size: 'xl', flip: 'vertical')},
+          {code: "fontawesome.icon('hand-point-right', size: 'xl', flip: 'both')", html: fontawesome.icon('hand-point-right', size: 'xl', flip: 'both')},
+        ]},
+        {title: 'Attributes', items: [
+          {code: "fontawesome.icon('heart', 'solid', 'xl', attributes: {style: 'color: #e63946'})", html: fontawesome.icon('heart', 'solid', 'xl', attributes: {style: 'color: #e63946'})},
+          {code: "fontawesome.icon('gear', 'solid', 'xl', attributes: {class: 'fa-spin'})", html: fontawesome.icon('gear', 'solid', 'xl', attributes: {class: 'fa-spin'})},
+          {code: "fontawesome.icon('bell', size: 'xl', attributes: {'aria-hidden': 'false', 'aria-label': 'Notifications', role: 'img'})", html: fontawesome.icon('bell', size: 'xl', attributes: {'aria-hidden': 'false', 'aria-label': 'Notifications', role: 'img'})},
+        ]},
+      ] %}
+      <section>
+        <h2>{{ 'Examples'|trans }}</h2>
+        <div class="examples">
+        {%- for example in examples %}
+          <article>
+            <header>{{ example.title|trans }}</header>
+            <ul>
+            {%- for item in example.items %}
+              <li><span>{{ item.html }}</span> <code>{{ '{{ ' ~ item.code ~ ' }}' }}</code></li>
+            {%- endfor %}
+            </ul>
+          </article>
+        {%- endfor %}
+        </div>
+      </section>
+      {#- icons list, extracted from the theme stylesheets -#}
+      {%- set pattern = '/\\.fa-([a-z0-9-]+)\\s*\\{\\s*--fa:/' %}
+      {%- set icons = {
+        solid: asset('css/fontawesome/fontawesome.css', {minify: false, fingerprint: false}).content|preg_match_all(pattern, 1),
+        brands: asset('css/fontawesome/brands.css', {minify: false, fingerprint: false}).content|preg_match_all(pattern, 1),
+      } %}
+      <section>
+        <h2>{{ 'Icons'|trans }}</h2>
+        <div class="gallery-tools">
+          <input type="search" id="filter" placeholder="{{ 'Search an icon…'|trans }}" aria-label="{{ 'Search an icon'|trans }}">
+          <div role="group" aria-label="{{ 'Style'|trans }}">
+            {%- for style in icons|keys %}
+            <button type="button" data-style="{{ style }}"{% if not loop.first %} class="outline"{% endif %}>{{ style|capitalize }}</button>
+            {%- endfor %}
+          </div>
+          <output id="count">{{ icons.solid|length }}</output>
+        </div>
+        <ul class="gallery" id="gallery" data-style="solid">
+        {%- for style, names in icons %}
+          {%- for name in names %}
+          <li data-style="{{ style }}" data-name="{{ name }}"><button type="button" title="{{ name }}">{{ fontawesome.icon(name, style) }}<span>{{ name }}</span></button></li>
+          {%- endfor %}
+        {%- endfor %}
+        </ul>
+      </section>
+      <script>{% apply minify_js ~%}
+        (function () {
+          var gallery = document.getElementById('gallery');
+          var filter = document.getElementById('filter');
+          var count = document.getElementById('count');
+          var items = Array.prototype.slice.call(gallery.children);
+          var buttons = document.querySelectorAll('.gallery-tools [data-style]');
+          function update() {
+            var query = filter.value.trim().toLowerCase();
+            var style = gallery.dataset.style;
+            var visible = 0;
+            items.forEach(function (item) {
+              var match = !query || item.dataset.name.indexOf(query) !== -1;
+              item.hidden = !match;
+              if (match && item.dataset.style === style) visible++;
+            });
+            count.value = visible;
+          }
+          filter.addEventListener('input', update);
+          buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+              gallery.dataset.style = button.dataset.style;
+              buttons.forEach(function (b) { b.classList.toggle('outline', b !== button); });
+              update();
+            });
+          });
+          gallery.addEventListener('click', function (event) {
+            var button = event.target.closest('button');
+            if (!button || !navigator.clipboard) return;
+            var code = "{{ '{{' }} fontawesome.icon('" + button.title + "', '" + gallery.dataset.style + "') {{ '}}' }}";
+            navigator.clipboard.writeText(code).then(function () {
+              button.classList.add('copied');
+              setTimeout(function () { button.classList.remove('copied'); }, 1000);
+            });
+          });
+        })();
+      {% endapply %}</script>
+      {%- endif %}
+    </main>
+    <footer class="container">
+      <small>
+        {%- set powered_by -%}
+        <a href="{{ cecil.url }}">Cecil</a>, <a href="https://fontawesome.com">Font Awesome</a> &amp; <a href="https://picocss.com">Pico CSS</a>
+        {%- endset %}
+        {% trans %}Powered by %powered_by%{% endtrans %}
+      </small>
+    </footer>
+  </body>
+</html>

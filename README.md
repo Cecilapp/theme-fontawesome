@@ -57,6 +57,15 @@ Display the desired icon:
 <i class="fa-brands fa-github fa-xl" aria-hidden="true" style="color: #333"></i>
 ```
 
+## Demo
+
+The `demo/` folder contains a website showing the macro options and listing all the icons, using the theme under development:
+
+```bash
+php demo/link.php
+cecil serve demo
+```
+
 ## License
 
 _Font Awesome_ component theme is a free software distributed under the terms of the MIT license.
